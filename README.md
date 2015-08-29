@@ -48,6 +48,8 @@ replicator.on('data', function (item) {
 To get all possible table names and associated information, see the
 [denmark-dawa-signature](https://github.com/AndreasMadsen/denmark-dawa-signature) module.
 
+###### Using a parallel writeable stream
+
 Since there is a lot of data, it is recommended to implement a `Writeable` stream
 that supports parallel writes. This can be done by implementing the
 `Writeable._writev` method, that takes a chunk of items.
