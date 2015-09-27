@@ -57,8 +57,9 @@ DAWAReplicate.prototype.update = function () {
       return callback(err);
     }
     self._update(version, function (err) {
-      this._updateing = false;
+      self._updateing = false;
       if (err) return callback(err);
+      callback(null, version);
     });
   }
 };
@@ -81,7 +82,7 @@ DAWAReplicate.prototype._update = function (nextVersion, callback) {
 
       // Pipe events to the main stream
       self.replicate(tableName)
-        .once('error', self.emit.bind(self, 'error'))
+        .once('error', done)
         .once('end', done)
         .pipe(self, { end: false });
     },
