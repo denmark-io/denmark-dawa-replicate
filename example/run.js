@@ -18,9 +18,11 @@ const settings = {
 // Setup replicator
 const replicate = new Replicate()
   .on('new-version', function (version) {
+    console.error('updateing to version: ' + version);
     console.log('\nupdateing to version: ' + version);
   })
   .on('update-table', function (tableName) {
+    console.error('updateing table: ' + tableName);
     console.log('\nupdateing table: ' + tableName);
   });
 
