@@ -120,16 +120,6 @@ replicator.getLatestVersion(function (err, remoteVersion) {
 });
 ```
 
-
-#### events = replicator.replicate(tableName)
-
-In case you want to be more in control, this method just fetches
-the latest events from `this.currVersion` to `this.nextVersion`
-without any side effects.
-
-The method returns an object stream. Each item have the same
-structure as those on on the main `replicator` stream.
-
 ## Source
 
 DAWA documents the replication protocol at http://dawa.aws.dk/replikeringdok.

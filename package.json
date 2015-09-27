@@ -19,7 +19,7 @@
   "dependencies": {
     "endpoint": "0.4.x",
     "denmark-dawa": "1.0.x",
-    "denmark-dawa-signature": "2.x.x"
+    "denmark-dawa-signature": "3.x.x"
   },
   "devDependencies": {
     "tap": "1.4.x",

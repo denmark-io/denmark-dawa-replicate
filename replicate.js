@@ -10,7 +10,7 @@ const stream = require('stream');
 const endpoint = require('endpoint');
 
 const DAWARequest = require('denmark-dawa');
-const SCHEMA = require('denmark-dawa-signature');
+const dawaSignature = require('denmark-dawa-signature');
 
 const TransformEvents = require('./lib/transform-events.js');
 const TransformSnapshot = require('./lib/transform-snapshot.js');
@@ -74,39 +74,41 @@ DAWAReplicate.prototype._update = function (nextVersion, callback) {
   }
   this.emit('new-version', nextVersion);
 
-  // New data exists, update all tables
-  async.eachSeries(
-    Object.keys(SCHEMA),
-    function (tableName, done) {
-      self.emit('update-table', tableName);
+  // fetch the latest replication schema
+  dawaSignature(function (err, schema) {
+    if (err) return callback(err);
 
-      // Pipe events to the main stream
-      self.replicate(tableName)
-        .once('error', done)
-        .once('end', done)
-        .pipe(self, { end: false });
-    },
-    function (err) {
-      if (err) return callback(err);
-      // When done update the current version attribute
-      self.currVersion = self.nextVersion;
-      callback(null, nextVersion);
-    }
-  );
+    // New data exists, update all tables
+    async.eachSeries(
+      Object.keys(schema),
+      function (tableName, done) {
+        self.emit('update-table', tableName);
+
+        // Get the source
+        const table = schema[tableName];
+        const source = url.parse(table.source).pathname;
+
+        // Pipe events to the main stream
+        self.replicate(source)
+          .once('error', done)
+          .once('end', done)
+          .pipe(self, { end: false });
+      },
+      function (err) {
+        if (err) return callback(err);
+        // When done update the current version attribute
+        self.currVersion = self.nextVersion;
+        callback(null, nextVersion);
+      }
+    );
+  });
 };
 
-DAWAReplicate.prototype.replicate = function (tableName) {
-  if (!SCHEMA.hasOwnProperty(tableName)) {
-    throw new Error(`${tableName} is not a valid table name`);
-  }
+DAWAReplicate.prototype._replicate = function (source) {
   if (this.currVersion >= this.nextVersion) {
     throw new RangeError(`next version ${this.nextVersion} must be greater` +
                          ` than the current version ${this.currVersion}`);
   }
-
-  // Get the source
-  const table = SCHEMA[tableName];
-  const source = url.parse(table.source).pathname;
 
   // If the current version is zero, no data exists in the
   // database. So skip all the update events and just use the
