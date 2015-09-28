@@ -5,14 +5,13 @@ const stream = require('stream');
 const async = require('async');
 const pg = require('pg');
 
-const SCHEMA = require('denmark-dawa-signature');
-
 function* itervalues(obj){
   for (const key of Object.keys(obj)) yield obj[key];
 }
 
-function ResetDB(settings) {
+function ResetDB(schema, settings) {
   stream.Writable.call(this, { objectMode: true });
+  this._schema = schema;
   this.db = new pg.Client(settings);
   this.db.connect();
 }
@@ -25,8 +24,8 @@ ResetDB.prototype.close = function (callback) {
 
 ResetDB.prototype.drop = function (callback) {
   const self = this;
-  async.each(Object.keys(SCHEMA), function (tableName, done) {
-    self._dropTable(SCHEMA[tableName], done);
+  async.each(Object.keys(this._schema), function (tableName, done) {
+    self._dropTable(self._schema[tableName], done);
   }, callback);
 };
 
@@ -54,8 +53,8 @@ ResetDB.prototype._dropTable = function (table, callback) {
 
 ResetDB.prototype.create = function (callback) {
   const self = this;
-  async.each(Object.keys(SCHEMA), function (tableName, done) {
-    self._createTable(SCHEMA[tableName], done);
+  async.each(Object.keys(this._schema), function (tableName, done) {
+    self._createTable(self._schema[tableName], done);
   }, callback);
 };
 

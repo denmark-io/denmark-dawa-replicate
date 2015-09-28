@@ -89,7 +89,7 @@ DAWAReplicate.prototype._update = function (nextVersion, callback) {
         const source = url.parse(table.source).pathname;
 
         // Pipe events to the main stream
-        self.replicate(source)
+        self._replicate(tableName, source)
           .once('error', done)
           .once('end', done)
           .pipe(self, { end: false });
@@ -104,7 +104,7 @@ DAWAReplicate.prototype._update = function (nextVersion, callback) {
   });
 };
 
-DAWAReplicate.prototype._replicate = function (source) {
+DAWAReplicate.prototype._replicate = function (tableName, source) {
   if (this.currVersion >= this.nextVersion) {
     throw new RangeError(`next version ${this.nextVersion} must be greater` +
                          ` than the current version ${this.currVersion}`);

@@ -6,15 +6,14 @@ const async = require('async');
 const util = require('util');
 const pg = require('pg');
 
-const SCHEMA = require('denmark-dawa-signature');
 const QueryBuilder = require('./query-builder.js');
 
-function InsertStream(settings) {
+function InsertStream(schema, settings) {
   stream.Writable.call(this, { objectMode: true });
 
   this.tables = new Map((function* () {
-    for (const tableName of Object.keys(SCHEMA)) {
-      yield [tableName, new QueryBuilder(SCHEMA[tableName])];
+    for (const tableName of Object.keys(schema)) {
+      yield [tableName, new QueryBuilder(schema[tableName])];
     }
   })());
 
