@@ -36,7 +36,18 @@ InsertStream.prototype._write = function (item, encoding, callback) {
 
 InsertStream.prototype._writev = function (chunks, callback) {
   const self = this;
+  async.series([
+    (done) => this.db.query('BEGIN', done),
+    function (done) {
+      async.each(chunks, function (item, done) {
+        self._write(item.chunk, item.encoding, done);
+      }, done);
+    },
+    (done) => this.db.query('COMMIT', done)
+  ], callback);
+  /*
   async.each(chunks, function (item, done) {
     self._write(item.chunk, item.encoding, done);
   }, callback);
+  */
 };
