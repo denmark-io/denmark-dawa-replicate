@@ -77,12 +77,18 @@ DAWAReplicate.prototype._update = function (nextVersion, callback) {
   // fetch the latest replication schema
   dawaSignature(function (err, schema) {
     if (err) return callback(err);
+    self.emit('update-start');
 
     // New data exists, update all tables
     async.eachSeries(
       Object.keys(schema),
       function (tableName, done) {
-        self.emit('update-table', tableName);
+
+        self.emit('update-table-start', tableName);
+        function doneAndEmit(err) {
+          self.emit('update-table-end', tableName);
+          done(err);
+        }
 
         // Get the source
         const table = schema[tableName];
@@ -90,14 +96,15 @@ DAWAReplicate.prototype._update = function (nextVersion, callback) {
 
         // Pipe events to the main stream
         self._replicate(tableName, source)
-          .once('error', done)
-          .once('end', done)
+          .once('error', doneAndEmit)
+          .once('end', doneAndEmit)
           .pipe(self, { end: false });
       },
       function (err) {
         if (err) return callback(err);
         // When done update the current version attribute
         self.currVersion = self.nextVersion;
+        self.emit('update-end');
         callback(null, nextVersion);
       }
     );
