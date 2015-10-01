@@ -1,0 +1,77 @@
+{
+  "postnumre": [
+    {
+      "operation": "insert",
+      "tidspunkt": "2014-08-20T11:17:50.644Z",
+      "sekvensnummer": 1,
+      "data": {
+        "nr": "0800",
+        "navn": "Høje Taastrup",
+        "stormodtager": true
+      }
+    }, {
+      "operation": "insert",
+      "tidspunkt": "2014-08-20T11:17:50.644Z",
+      "sekvensnummer": 2,
+      "data": {
+        "nr": "0999",
+        "navn": "København C",
+        "stormodtager": true
+      }
+    }, {
+      "operation": "update",
+      "tidspunkt": "2014-08-20T11:17:50.644Z",
+      "sekvensnummer": 3,
+      "data": {
+        "nr": "1050",
+        "navn": "København",
+        "stormodtager": false
+      }
+    }, {
+      "operation": "update",
+      "tidspunkt": "2014-08-20T11:17:50.644Z",
+      "sekvensnummer": 4,
+      "data": {
+        "nr": "1050",
+        "navn": "København K",
+        "stormodtager": false
+      }
+    }, {
+      "operation": "insert",
+      "tidspunkt": "2014-08-20T11:17:50.644Z",
+      "sekvensnummer": 5,
+      "data": {
+        "nr": "1052",
+        "navn": "København K",
+        "stormodtager": false
+      }
+    }
+  ],
+  "vejstykker": [
+    {
+      "operation": "insert",
+      "tidspunkt": "2014-08-20T20:15:38.754Z",
+      "sekvensnummer": 1,
+      "data": {
+        "kode": "9902",
+        "kommunekode": "0766",
+        "navn": "Norden (høj Vejkode)",
+        "adresseringsnavn": "Norden (høj Vejkode",
+        "oprettet": "2014-08-20T04:53:14.233",
+        "ændret": "2014-08-20T04:53:14.233"
+      }
+    }
+  ],
+  "adgangsadresser": [],
+  "adresser": [],
+  "ejerlav": [],
+  "regionstilknytninger": [],
+  "kommunetilknytninger": [],
+  "postnummertilknytninger": [],
+  "sognetilknytninger": [],
+  "politikredstilknytninger": [],
+  "opstillingskredstilknytninger": [],
+  "valglandsdelstilknytninger": [],
+  "zonetilknytninger": [],
+  "jordstykketilknytninger": []
+}
