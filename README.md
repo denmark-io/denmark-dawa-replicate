@@ -1,6 +1,6 @@
 #denmark-dawa-replicate
 
->  **Work In Progress** Replicate the DAWA database.
+> Replicate the DAWA database.
 
 ## Installation
 
@@ -46,7 +46,7 @@ replicator.on('data', function (item) {
 ```
 
 To get all possible table names and associated information, see the
-[denmark-dawa-signature](https://github.com/AndreasMadsen/denmark-dawa-signature) module.
+[denmark-dawa-schema](https://github.com/AndreasMadsen/denmark-dawa-schema) module.
 
 ###### Using a parallel writeable stream
 

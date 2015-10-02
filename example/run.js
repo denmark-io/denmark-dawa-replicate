@@ -4,7 +4,7 @@
 'use strong';
 
 const async = require('async');
-const dawaSignature = require('denmark-dawa-signature');
+const dawaSchema = require('denmark-dawa-schema');
 
 const Replicate = require('../replicate.js');
 const ResetDB = require('./reset-db.js');
@@ -16,7 +16,7 @@ const settings = {
   host: 'localhost'
 };
 
-dawaSignature(function (err, schema) {
+dawaSchema(function (err, schema) {
   if (err) throw err;
 
   let lastTime = null;

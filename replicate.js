@@ -10,7 +10,7 @@ const stream = require('stream');
 const endpoint = require('endpoint');
 
 const DAWARequest = require('denmark-dawa');
-const dawaSignature = require('denmark-dawa-signature');
+const dawaSchema = require('denmark-dawa-schema');
 
 const TransformEvents = require('./lib/transform-events.js');
 const TransformSnapshot = require('./lib/transform-snapshot.js');
@@ -75,7 +75,7 @@ DAWAReplicate.prototype._update = function (nextVersion, callback) {
   this.emit('new-version', nextVersion);
 
   // fetch the latest replication schema
-  dawaSignature(function (err, schema) {
+  dawaSchema(function (err, schema) {
     if (err) return callback(err);
     self.emit('update-start');
 
