@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "author": "Andreas Madsen <amwebdk@gmail.com>",
   "scripts": {
-    "test": "tap test.js"
+    "test": "tap test/simple/*"
   },
   "main": "./replicate.js",
   "repository": {
