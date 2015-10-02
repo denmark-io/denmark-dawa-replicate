@@ -11,7 +11,7 @@ const events = require('events');
 const mockney = require('mockney');
 const drugged = require('drugged');
 const querystring = require('querystring');
-const dawaSignature = require('denmark-dawa-signature');
+const dawaSchema = require('denmark-dawa-schema');
 
 function FakeService() {
   this.server = http.createServer();
@@ -80,7 +80,7 @@ FakeService.prototype.listen = function (callback) {
   const self = this;
   async.parallel({
     listen: (done) => this.server.listen(0, 'localhost', done),
-    signature: (done) => dawaSignature(done),
+    schema: (done) => dawaSchema(done),
     data: (done) => fs.readFile(path.resolve(__dirname, 'fake-data.json'), done)
   }, function (err, result) {
     if (err) return self.emit('error', err);
@@ -91,7 +91,7 @@ FakeService.prototype.listen = function (callback) {
     mockney.redirect('dawa.aws.dk:80', 'localhost:' + self.port);
 
     // store schema and data for later use in the request handlers
-    self.schema = result.signature;
+    self.schema = result.schema;
     self.data = JSON.parse(result.data);
 
     self.registerRequestHandlers();
