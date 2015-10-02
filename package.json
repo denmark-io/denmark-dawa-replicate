@@ -22,9 +22,11 @@
     "denmark-dawa-signature": "3.x.x"
   },
   "devDependencies": {
-    "tap": "1.4.x",
     "pg": "4.4.x",
-    "async": "1.4.x"
+    "tap": "2.x.x",
+    "async": "1.4.x",
+    "mockney": "0.2.x",
+    "drugged": "1.x.x"
   },
   "license": "MIT"
 }
