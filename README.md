@@ -1,4 +1,4 @@
-#denmark-dawa-replicate
+#denmark-dawa-replicate [![Build Status](https://travis-ci.org/denmark-io/denmark-dawa-replicate.svg?branch=master)](https://travis-ci.org/denmark-io/denmark-dawa-replicate)
 
 > Replicate the DAWA database.
 
