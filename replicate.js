@@ -39,13 +39,13 @@ DAWAReplicate.prototype.update = function () {
 
   // Prevent simultaniuse .update calls
   if (this._updateing) {
-    throw new Error(`can't update while another update is running`);
+    return callback(new Error(`can't update while another update is running`));
   }
   this._updateing = true;
 
   // Allow nextVersion to be specified manually or fetch automatically
   if (arguments.length === 2) {
-    process.nextTick(cb.bind(null, null, arguments[0]));
+    process.nextTick(() => cb(null, arguments[0]));
   } else {
     this.getLatestVersion(cb);
   }
