@@ -28,6 +28,11 @@ module.exports = FakeService;
 FakeService.prototype.registerRequestHandlers = function () {
   const self = this;
 
+  // Registre replicate schema
+  this.router.get('/replikeringdok/schema.json', function () {
+    fs.createReadStream(path.resolve(__dirname, 'fake-schema.json')).pipe(this.res);
+  });
+
   // Registre sekvensnummer notifier
   this.router.get('/replikering/senestesekvensnummer', function () {
     this.res.end(JSON.stringify({
