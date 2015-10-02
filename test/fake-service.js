@@ -33,7 +33,7 @@ FakeService.prototype.registerRequestHandlers = function () {
     this.res.end(JSON.stringify({
       sekvensnummer: self.sekvensnummer,
       tidspunkt: new Date()
-    }, null, '\t'));
+    }));
   });
 
   // Registre resource handleres
@@ -92,6 +92,14 @@ FakeService.prototype.listen = function (callback) {
     self.registerRequestHandlers();
     callback(null);
   });
+};
+
+FakeService.prototype.fail = function (enable) {
+  if (enable) {
+    mockney.redirect('dawa.aws.dk:80', 'localhost:' + 0xBAD);
+  } else {
+    mockney.redirect('dawa.aws.dk:80', 'localhost:' + this.port);
+  }
 };
 
 FakeService.prototype.close = function (callback) {
